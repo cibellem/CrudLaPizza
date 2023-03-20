@@ -4,6 +4,7 @@ const TOPPINGS_API_BASE_URL = "api/toppings/";
 
 class ToppingsAPI {
   getToppings() {
+    console.log(axios.get(TOPPINGS_API_BASE_URL));
     return axios.get(TOPPINGS_API_BASE_URL);
   }
 
@@ -16,6 +17,7 @@ class ToppingsAPI {
   }
 
   deleteTopping(toppingID: string) {
+    console.log(TOPPINGS_API_BASE_URL + "/" + toppingID);
     return axios.delete(TOPPINGS_API_BASE_URL + "/" + toppingID);
   }
 }

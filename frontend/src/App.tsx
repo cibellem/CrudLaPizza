@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import "./style.css";
-import ToppingsAPI from "./API";
+import ToppingsAPI from "./ToppingsAPI";
+import ToppingForm from "./components/ToppingForm/ToppingForm";
+import PizzaAPI from "./PizzaAPI";
 
 function App() {
   const [topping, setTopping] = useState<string>("");
+  const [pizzaName, setPizzaName] = useState<string>("");
   const [editId, setEditId] = useState<string>("");
   const [toppings, setToppings] = useState<{ id: string; value: string }[]>([]);
+  const [isCreating, setIsCreating] = useState(false);
+
+  const [checkedCheckboxes, setCheckedCheckboxes] = useState([]);
 
   useEffect(() => {
     //Call API to get all toppings and set to local state
@@ -43,6 +49,18 @@ function App() {
     }
   };
 
+  const handlePizzaSubmit = (e: any) => {
+    e.preventDefault();
+    const obj = {
+      name: pizzaName,
+      toppings: checkedCheckboxes,
+    };
+
+    PizzaAPI.createPizza(obj).then((res) => {
+      console.log(obj, "OBG");
+    });
+  };
+
   function removeTopping(id: string) {
     //Returns a new toppings array without the topping that matches the id
     const deleteTopping = toppings.filter((item) => item.id !== id);
@@ -56,40 +74,93 @@ function App() {
     setEditId(top.id);
   };
 
+  //Pizza logic
+  const handleCheckboxChange = (data: any) => {
+    const isChecked = checkedCheckboxes.some(
+      //@ts-ignore
+      (checkedCheckbox) => checkedCheckbox.value === data.value
+    );
+    if (isChecked) {
+      setCheckedCheckboxes(
+        checkedCheckboxes.filter(
+          //@ts-ignore
+          (checkedCheckbox) => checkedCheckbox.value !== data.value
+        )
+      );
+    } else {
+      setCheckedCheckboxes(checkedCheckboxes.concat(data));
+    }
+  };
+
+  const handlePizzaCreation = () => {
+    setIsCreating(!isCreating);
+  };
+
   return (
-    <>
-      <section className="main">
-        <h1>Manage your toppings</h1>
-        <article className="toppingsInventory">
-          <form onSubmit={handleSubmit}>
+    <section className="main">
+      <ToppingForm
+        editId={editId}
+        handleSubmit={handleSubmit}
+        setTopping={setTopping}
+        topping={topping}
+      />
+
+      <article className="toppingsListBlock">
+        <h3>Toppings List</h3>
+        {toppings &&
+          toppings.map((top) => (
+            <div key={top.id} className="toppingsList">
+              <span>{top.value}</span>
+              <div className="toppingsListActionBtns">
+                <button onClick={() => editTopping(top)}>Edit</button>
+                <button type="button" onClick={() => removeTopping(top.id)}>
+                  Remove
+                </button>
+              </div>
+            </div>
+          ))}
+      </article>
+
+      <article>
+        <button onClick={handlePizzaCreation}>Create New Pizza</button>
+        {isCreating && (
+          <form onSubmit={handlePizzaSubmit}>
             <label>
+              Pizza Name
               <input
                 type="text"
-                value={topping}
-                onChange={(e) => setTopping(e.target.value)}
+                value={pizzaName}
+                name="pizzaname"
+                onChange={(e) => setPizzaName(e.target.value)}
               />
             </label>
-            <button type="submit">{editId ? "Done" : "Add"}</button>
+            <>
+              <h4>Pick the toppings</h4>
+              {toppings &&
+                toppings.map((top, index) => (
+                  <label key={top.id}>
+                    <input
+                      type="checkbox"
+                      value={top.value}
+                      name="toppings"
+                      checked={checkedCheckboxes.some(
+                        //@ts-ignore
+                        (checkedCheckbox) =>
+                          //@ts-ignore
+                          checkedCheckbox.value === top.value
+                      )}
+                      //@ts-ignore
+                      onChange={() => handleCheckboxChange(top)}
+                    />
+                    {top.value}
+                  </label>
+                ))}
+            </>
+            <button type="submit">Create</button>
           </form>
-        </article>
-
-        <article className="toppingsListBlock">
-          <h3>Toppings List</h3>
-          {toppings &&
-            toppings.map((top) => (
-              <div key={top.id} className="toppingsList">
-                <span>{top.value}</span>
-                <div className="toppingsListActionBtns">
-                  <button onClick={() => editTopping(top)}>Edit</button>
-                  <button type="button" onClick={() => removeTopping(top.id)}>
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))}
-        </article>
-      </section>
-    </>
+        )}
+      </article>
+    </section>
   );
 }
 

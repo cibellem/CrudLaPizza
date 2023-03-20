@@ -19,7 +19,8 @@ from rest_framework import routers
 from crudLePizza import views
 
 router = routers.DefaultRouter()
-router.register(r'toppings', views.ToppingView, 'topping')
+router.register(r'toppings', views.ToppingView, basename='toppings')
+router.register(r'pizzas', views.PizzaView, basename='pizzas')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
