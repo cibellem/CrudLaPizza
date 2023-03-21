@@ -1,5 +1,6 @@
 //Dependencies and modules
 const express = require("express");
+const cors = require("cors");
 const path = require("path");
 //Tells node that we are creating an express server
 const app = express();
@@ -12,6 +13,7 @@ const routes = require("./routes");
 //Middlewares = function that will be executed in between request and responses
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors({ origin: true }));
 
 //Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
