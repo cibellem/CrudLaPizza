@@ -2,5 +2,89 @@ body {
   font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f7efd9;
+}
+
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 90%;
+  margin: auto;
+  font-family: "Poppins", sans-serif;
+  /* background-color: #f7efd9; */
+}
+
+.toppingsInventory {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.toppingsListBlock {
+  border: 1px solid black;
+  margin-top: 10px;
+  padding: 15px;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.toppingsList {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+/* .toppingsListActionBtns {
+  margin: 0 15px 0 15px;
+} */
+
+.pizzaMain {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: unset;
+  width: 90%;
+  margin: auto;
+  font-family: "Poppins", sans-serif;
+}
+
+.pizzaCard {
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.pizzaCard h2,
+h3,
+h4,
+h5,
+ul {
+  margin: 0;
+}
+
+.formWrapper {
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.formWrapper form {
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+}
+
+.formWrapper label {
+  margin-right: 10px;
 }

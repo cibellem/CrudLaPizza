@@ -1,28 +1,42 @@
+import { Button } from "semantic-ui-react";
+
+//Type this file
+
 type Props = {
-  editId: string;
-  handleSubmit: (e: React.SyntheticEvent) => void;
-  setTopping: (topping: string) => void;
-  topping: string;
+  editTopping: any;
+  toppings: any;
+  removeTopping: any;
 };
 
-function ToppingForm({ editId, handleSubmit, topping, setTopping }: Props) {
+function ToppingList({ editTopping, toppings, removeTopping }: Props) {
   return (
-    <>
-      <h1>Manage your toppings</h1>
-      <article className="toppingsInventory">
-        <form onSubmit={handleSubmit}>
-          <label>
-            <input
-              type="text"
-              value={topping}
-              onChange={(e) => setTopping(e.target.value)}
-            />
-          </label>
-          <button type="submit">{editId ? "Done" : "Add"}</button>
-        </form>
-      </article>
-    </>
+    <article className="toppingsListBlock">
+      <h3>Toppings List</h3>
+      {toppings &&
+        toppings.map((top: any) => (
+          <div key={top.id} className="toppingsList">
+            <span>{top.value}</span>
+            <div className="toppingsListActionBtns">
+              <Button
+                color="yellow"
+                size="mini"
+                onClick={() => editTopping(top)}
+              >
+                Edit
+              </Button>
+              <Button
+                color="red"
+                size="mini"
+                type="button"
+                onClick={() => removeTopping(top.id)}
+              >
+                Remove
+              </Button>
+            </div>
+          </div>
+        ))}
+    </article>
   );
 }
 
-export default ToppingForm;
+export default ToppingList;

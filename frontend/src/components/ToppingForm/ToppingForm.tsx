@@ -1,3 +1,5 @@
+import { Button, Input } from "semantic-ui-react";
+
 type Props = {
   editId: string;
   handleSubmit: (e: React.SyntheticEvent) => void;
@@ -7,21 +9,22 @@ type Props = {
 
 function ToppingForm({ editId, handleSubmit, topping, setTopping }: Props) {
   return (
-    <>
-      <h1>Manage your toppings</h1>
-      <article className="toppingsInventory">
-        <form onSubmit={handleSubmit}>
-          <label>
-            <input
-              type="text"
-              value={topping}
-              onChange={(e) => setTopping(e.target.value)}
-            />
-          </label>
-          <button type="submit">{editId ? "Done" : "Add"}</button>
-        </form>
-      </article>
-    </>
+    <article className="toppingsInventory">
+      <form onSubmit={handleSubmit}>
+        <label>
+          <Input
+            placeholder="Add new topping..."
+            size="mini"
+            type="text"
+            value={topping}
+            onChange={(e) => setTopping(e.target.value)}
+          />
+        </label>
+        <Button size="mini" type="submit">
+          {editId ? "Done" : "Add"}
+        </Button>
+      </form>
+    </article>
   );
 }
 
