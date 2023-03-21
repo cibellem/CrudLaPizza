@@ -7,7 +7,9 @@ import { Container } from "semantic-ui-react";
 function Toppings() {
   const [topping, setTopping] = useState<string>("");
   const [editId, setEditId] = useState<string>("");
-  const [toppings, setToppings] = useState<{ id: string; value: string }[]>([]);
+  const [toppings, setToppings] = useState<{ _id: string; value: string }[]>(
+    []
+  );
 
   useEffect(() => {
     //Call API to get all toppings and set to local state
@@ -24,7 +26,7 @@ function Toppings() {
       // Find the entry that needs to be updated
       setToppings(
         toppings.map((t) => {
-          if (t.id === editId) {
+          if (t._id === editId) {
             t.value = topping;
           }
           return t;
@@ -40,7 +42,10 @@ function Toppings() {
     // Check if input is not empty and if value is not duplicated in toppings array
     if (toppings.filter((e) => e.value === topping).length <= 0) {
       ToppingsAPI.addTopping({ value: topping }).then((res) => {
-        setToppings([{ id: res.data.id, value: res.data.value }, ...toppings]);
+        setToppings([
+          { _id: res.data._id, value: res.data.value },
+          ...toppings,
+        ]);
       });
       setTopping("");
     }
@@ -48,7 +53,7 @@ function Toppings() {
 
   const removeTopping = (id: string) => {
     //Returns a new toppings array without the topping that matches the id
-    const deleteTopping = toppings.filter((item) => item.id !== id);
+    const deleteTopping = toppings.filter((item) => item._id !== id);
     setToppings([...deleteTopping]);
     //API call
     ToppingsAPI.deleteTopping(id);
@@ -56,7 +61,7 @@ function Toppings() {
 
   const editTopping = (top: any) => {
     setTopping(top.value);
-    setEditId(top.id);
+    setEditId(top._id);
   };
 
   return (

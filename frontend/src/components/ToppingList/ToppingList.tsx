@@ -14,7 +14,7 @@ function ToppingList({ editTopping, toppings, removeTopping }: Props) {
       <h3>Toppings List</h3>
       {toppings &&
         toppings.map((top: any) => (
-          <div key={top.id} className="toppingsList">
+          <div key={top._id} className="toppingsList">
             <span>{top.value}</span>
             <div className="toppingsListActionBtns">
               <Button
@@ -28,7 +28,7 @@ function ToppingList({ editTopping, toppings, removeTopping }: Props) {
                 color="red"
                 size="mini"
                 type="button"
-                onClick={() => removeTopping(top.id)}
+                onClick={() => removeTopping(top._id)}
               >
                 Remove
               </Button>

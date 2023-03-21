@@ -8,8 +8,8 @@
     "start:prod": "node server.js",
     "start:dev": "concurrently \"nodemon --ignore 'frontend/*'\" \"npm run frontend\"",
     "build": "export SET NODE_OPTIONS=--openssl-legacy-provider && cd client && npm run build",
-    "frontend": "cd frontend && npm run start",
-    "install": "cd frontend && npm install"
+    "frontend": "cd frontend && npm run start"
+
   },
   "author": "",
   "license": "ISC",
