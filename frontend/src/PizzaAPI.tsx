@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const PIZZA_API_BASE_URL = "api/pizzas/";
+const PIZZA_API_BASE_URL = "https://crudlapizzabe.onrender.com/api/pizzas/";
 
 class PizzaAPI {
   getPizzas() {
