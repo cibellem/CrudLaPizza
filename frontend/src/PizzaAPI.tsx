@@ -7,7 +7,7 @@ class PizzaAPI {
     return axios.get(PIZZA_API_BASE_URL);
   }
 
-  createPizza(pizza: { name: string; toppings: any }) {
+  createPizza(pizza: any) {
     return axios.post(PIZZA_API_BASE_URL, pizza);
   }
 

@@ -10,7 +10,7 @@ function Pizzas() {
   const [isCreating, setIsCreating] = useState(false);
   const [checkedCheckboxes, setCheckedCheckboxes] = useState([]);
 
-  //Excessive calls
+  //TODO - Excessive calls
   useEffect(() => {
     //Call API to get all toppings and set to local state
     PizzaAPI.getPizzas().then((res) => {
@@ -25,10 +25,9 @@ function Pizzas() {
   //Pizza logic
   const handlePizzaSubmit = (e: any) => {
     e.preventDefault();
-    //Think this better no need to do this extra op
-    let toppingsList = checkedCheckboxes.map(({ value }) => value);
-    //Check if it's duplicated
-    PizzaAPI.createPizza({ name: pizzaName, toppings: toppingsList }).then(
+
+    //TODO - Check if it's duplicated
+    PizzaAPI.createPizza({ name: pizzaName, toppings: checkedCheckboxes }).then(
       (res) => {
         setPizzas([
           { name: res.data.name, toppings: res.data.toppings },
@@ -43,7 +42,7 @@ function Pizzas() {
   const deletePizza = (id: string) => {
     //Returns a new pizza array without the pizza that matches the id
     //@ts-ignore
-    const deletePizza = pizzas.filter((item) => item.id !== id);
+    const deletePizza = pizzas.filter((item) => item._id !== id);
     setPizzas([...deletePizza]);
     //API call
     PizzaAPI.deletePizza(id);
@@ -133,7 +132,7 @@ function Pizzas() {
                   <Button
                     size="mini"
                     color="red"
-                    onClick={() => deletePizza(pizza.id)}
+                    onClick={() => deletePizza(pizza._id)}
                   >
                     Remove Pizza
                   </Button>

@@ -20,8 +20,6 @@ function Toppings() {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    console.log(editId, "EDITID");
-    console.log(topping);
     if (editId) {
       // Find the entry that needs to be updated
       setToppings(
@@ -57,9 +55,8 @@ function Toppings() {
   };
 
   const editTopping = (top: any) => {
-    console.log(top, "TOPING");
     setTopping(top.value);
-    setEditId(top.value);
+    setEditId(top.id);
   };
 
   return (
