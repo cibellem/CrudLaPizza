@@ -1,7 +1,7 @@
 {
   "name": "CrudLaPizza",
   "version": "0.1.0",
-  "proxy": "http://localhost:3001/",
+  "proxy": "https://crudlapizzabe.onrender.com/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -19,18 +19,7 @@
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4",
-    "body-parser": "^1.20.1",
-    "concurrently": "^4.1.2",
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "if-env": "^1.0.4",
-    "mongoose": "^5.13.15"
-  },
-  "devDependencies": {
-    "concurrently": "^4.1.2",
-    "dotenv-webpack": "^8.0.1",
-    "nodemon": "^2.0.20"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
