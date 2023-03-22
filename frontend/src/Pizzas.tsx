@@ -13,6 +13,7 @@ function Pizzas() {
   const [toppings, setToppings] = useState<Topping[]>([]);
   const [pizza, setPizza] = useState<Pizza>();
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState<string>();
 
   useEffect(() => {
     //Call API to get all toppings and set to local state
@@ -25,27 +26,28 @@ function Pizzas() {
     });
   }, []);
 
-  useEffect(() => {}, [pizza]);
+  useEffect(() => {}, [pizzas]);
 
   //Pizza logic
   const handlePizzaSubmit = (e: any) => {
     e.preventDefault();
-    if (pizzas.filter((e) => e.name === pizzaName).length <= 0) {
-      console.log();
-    }
-    PizzaAPI.createPizza({ name: pizzaName, toppings: checkedCheckboxes }).then(
-      (res) => {
+    if (pizzaName.length <= 0) {
+      setError("Pizza name can't be empty");
+    } else {
+      PizzaAPI.createPizza({
+        name: pizzaName,
+        toppings: checkedCheckboxes,
+      }).then((res) => {
         setPizzas([
           { name: res.data.name, toppings: res.data.toppings },
           ...pizzas,
         ]);
-      }
-    );
-    setPizzaName("");
+      });
+      setPizzaName("");
+    }
   };
 
   const handlePizzaUpdate = () => {
-    setCheckedCheckboxes([]);
     PizzaAPI.updatePizza(
       { name: pizza?.name, toppings: checkedCheckboxesEdit },
       pizza?._id as string
@@ -116,10 +118,11 @@ function Pizzas() {
         setPizzaName={setPizzaName}
         toppings={toppings}
       />
+      <span>{error ? error : null}</span>
 
       <Modal open={open}>
         <Modal.Header>Edit Your Pizza</Modal.Header>
-        <p>Pizza Name: {pizza ? pizza.name : "Loca"}</p>
+        <p>Pizza Name: {pizza ? pizza.name : ""}</p>
         <Modal.Content>
           <div className="formWrapper">
             <form>
