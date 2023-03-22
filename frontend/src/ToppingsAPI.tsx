@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const TOPPINGS_API_BASE_URL = `${process.env.REACT_APP_BE_URL}/api/toppings`;
+const TOPPINGS_API_BASE_URL = `${process.env.REACT_APP_BE_URL}/api/toppings/`;
 
 class ToppingsAPI {
   getToppings() {
