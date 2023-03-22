@@ -52,9 +52,7 @@ function Pizzas() {
       { name: pizza?.name, toppings: checkedCheckboxesEdit },
       pizza?._id as string
     );
-    PizzaAPI.getPizzas().then((res) => {
-      setPizzas(res.data);
-    });
+    window.location.reload();
     setOpen(false);
   };
 
