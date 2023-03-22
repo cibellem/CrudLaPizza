@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import PizzaAPI from "./PizzaAPI";
 import ToppingsAPI from "./ToppingsAPI";
-import { Button, Input, List, Item, Container } from "semantic-ui-react";
+import { Button, List, Modal, Item, Container } from "semantic-ui-react";
+import PizzaForm from "./components/PizzaForm/PizzaForm";
+import { Pizza, Topping } from "./Utils";
 
 function Pizzas() {
-  const [pizzaName, setPizzaName] = useState<string>("");
-  const [pizzas, setPizzas] = useState<{ name: string; toppings: [{}] }[]>([]);
-  const [toppings, setToppings] = useState<{ id: string; value: string }[]>([]);
-  const [isCreating, setIsCreating] = useState(false);
   const [checkedCheckboxes, setCheckedCheckboxes] = useState([]);
+  const [pizzaName, setPizzaName] = useState<string>("");
+  const [pizzas, setPizzas] = useState<Pizza[]>([]);
+  const [toppings, setToppings] = useState<Topping[]>([]);
+  const [pizza, setPizza] = useState<Pizza>();
+  const [open, setOpen] = useState(false);
 
   //TODO - Excessive calls
   useEffect(() => {
@@ -25,7 +28,6 @@ function Pizzas() {
   //Pizza logic
   const handlePizzaSubmit = (e: any) => {
     e.preventDefault();
-
     //TODO - Check if it's duplicated
     PizzaAPI.createPizza({ name: pizzaName, toppings: checkedCheckboxes }).then(
       (res) => {
@@ -35,16 +37,24 @@ function Pizzas() {
         ]);
       }
     );
-
     setPizzaName("");
+  };
+
+  const handlePizzaUpdate = () => {
+    PizzaAPI.updatePizza(
+      { name: pizza?.name, toppings: checkedCheckboxes },
+      pizza?._id as string
+    );
+    setOpen(false);
+    PizzaAPI.getPizzas().then((res) => {
+      setPizzas(res.data);
+    });
   };
 
   const deletePizza = (id: string) => {
     //Returns a new pizza array without the pizza that matches the id
-    //@ts-ignore
     const deletePizza = pizzas.filter((item) => item._id !== id);
     setPizzas([...deletePizza]);
-    //API call
     PizzaAPI.deletePizza(id);
   };
 
@@ -65,76 +75,86 @@ function Pizzas() {
     }
   };
 
-  const handlePizzaCreation = () => {
-    setIsCreating(!isCreating);
+  const editToppingFlow = (data: any) => {
+    setPizza(data);
+    setOpen(true);
   };
 
   return (
     <Container>
       <h1>Pizzas</h1>
-      <button onClick={handlePizzaCreation}>New Pizza</button>
-      {isCreating && (
-        <div className="formWrapper">
-          <form onSubmit={handlePizzaSubmit}>
-            <label>
-              Pizza Name:
-              <Input
-                size="mini"
-                type="text"
-                value={pizzaName}
-                name="pizzaname"
-                onChange={(e) => setPizzaName(e.target.value)}
-              />
-            </label>
-            <>
-              <h4>Pick the toppings</h4>
-              {toppings &&
-                toppings.map((top, index) => (
-                  <label key={top.id} className="form-control">
-                    <input
-                      type="checkbox"
-                      value={top.value}
-                      name="toppings"
-                      checked={checkedCheckboxes.some(
-                        //@ts-ignore
-                        (checkedCheckbox) =>
-                          //@ts-ignore
-                          checkedCheckbox.value === top.value
-                      )}
-                      //@ts-ignore
-                      onChange={() => handleCheckboxChange(top)}
-                    />
-                    {top.value}
-                  </label>
-                ))}
-            </>
-            <button type="submit">Create</button>
-          </form>
-        </div>
-      )}
+      <PizzaForm
+        handleCheckboxChange={handleCheckboxChange}
+        checkedCheckboxes={checkedCheckboxes}
+        handlePizzaSubmit={handlePizzaSubmit}
+        pizzaName={pizzaName}
+        setPizzaName={setPizzaName}
+        toppings={toppings}
+      />
+
+      <Modal open={open}>
+        <Modal.Header>Edit Your Pizza</Modal.Header>
+        <p>Pizza Name: {pizza ? pizza.name : ""}</p>
+        <Modal.Content>
+          <div className="formWrapper">
+            <form>
+              <>
+                <h4>Update your toppings</h4>
+                {toppings &&
+                  toppings.map((top: Topping) => (
+                    <label key={top._id}>
+                      <input
+                        type="checkbox"
+                        value={top.value}
+                        name="toppings"
+                        checked={checkedCheckboxes.some(
+                          (checkedBox: any) => checkedBox.value === top.value
+                        )}
+                        onChange={() => handleCheckboxChange(top)}
+                      />
+                      {top.value}
+                    </label>
+                  ))}
+              </>
+            </form>
+          </div>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button negative onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+          <Button positive onClick={handlePizzaUpdate}>
+            Update
+          </Button>
+        </Modal.Actions>
+      </Modal>
 
       {pizzas &&
-        //@ts-ignore
-        pizzas.map((pizza: any) => (
+        pizzas.map((pizza: Pizza) => (
           <div className="pizzaCard">
             <Item.Group>
               <Item>
                 <Item.Content>
                   <Item.Header as="a">Name: {pizza.name}</Item.Header>
                   <Item.Meta>Toppings Added:</Item.Meta>
-
                   {pizza.toppings.map((topping: any) => (
                     <List>
                       <List.Item>{topping.value}</List.Item>
                     </List>
                   ))}
-
                   <Button
                     size="mini"
                     color="red"
-                    onClick={() => deletePizza(pizza._id)}
+                    onClick={() => deletePizza(pizza._id as string)}
                   >
                     Remove Pizza
+                  </Button>
+                  <Button
+                    size="mini"
+                    color="yellow"
+                    onClick={() => editToppingFlow(pizza)}
+                  >
+                    Edit toppings
                   </Button>
                 </Item.Content>
               </Item>

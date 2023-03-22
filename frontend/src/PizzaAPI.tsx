@@ -1,22 +1,22 @@
 import axios from "axios";
 
-const PIZZA_API_BASE_URL = "https://crudlapizzabe.onrender.com/api/pizzas/";
+const PIZZA_API_BASE_URL = "api/pizzas/";
 
 class PizzaAPI {
   getPizzas() {
     return axios.get(PIZZA_API_BASE_URL);
   }
 
-  createPizza(pizza: any) {
+  createPizza(pizza: { name: string; toppings: object }) {
     return axios.post(PIZZA_API_BASE_URL, pizza);
   }
 
-  updatePizza(topping: { value: string }, toppingID: string) {
-    return axios.put(PIZZA_API_BASE_URL + toppingID + "/", topping);
+  updatePizza(pizza: any, pizzaID: string) {
+    return axios.put(PIZZA_API_BASE_URL + pizzaID + "/", pizza);
   }
 
-  deletePizza(toppingID: string) {
-    return axios.delete(PIZZA_API_BASE_URL + "/" + toppingID);
+  deletePizza(pizzaID: string) {
+    return axios.delete(PIZZA_API_BASE_URL + "/" + pizzaID);
   }
 }
 

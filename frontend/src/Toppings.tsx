@@ -3,13 +3,12 @@ import ToppingsAPI from "./ToppingsAPI";
 import ToppingForm from "./components/ToppingForm/ToppingForm";
 import ToppingList from "./components/ToppingList/ToppingList";
 import { Container } from "semantic-ui-react";
+import { Topping } from "./Utils";
 
 function Toppings() {
   const [topping, setTopping] = useState<string>("");
   const [editId, setEditId] = useState<string>("");
-  const [toppings, setToppings] = useState<{ _id: string; value: string }[]>(
-    []
-  );
+  const [toppings, setToppings] = useState<Topping[]>([]);
 
   useEffect(() => {
     //Call API to get all toppings and set to local state

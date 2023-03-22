@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const TOPPINGS_API_BASE_URL =
-  "https://crudlapizzabe.onrender.com/api/toppings/";
+const TOPPINGS_API_BASE_URL = "api/toppings/";
 
 class ToppingsAPI {
   getToppings() {
