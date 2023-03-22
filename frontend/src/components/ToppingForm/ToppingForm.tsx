@@ -14,13 +14,13 @@ function ToppingForm({ editId, handleSubmit, topping, setTopping }: Props) {
         <label>
           <Input
             placeholder="Add new topping..."
-            size="mini"
+            size="small"
             type="text"
             value={topping}
             onChange={(e) => setTopping(e.target.value)}
           />
         </label>
-        <Button size="mini" type="submit">
+        <Button color="green" size="small" type="submit">
           {editId ? "Done" : "Add"}
         </Button>
       </form>

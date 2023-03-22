@@ -68,7 +68,7 @@ function Toppings() {
 
   return (
     <Container>
-      <h1>Toppings</h1>
+      <h1 style={{ marginTop: "20px" }}>Toppings</h1>
       <ToppingForm
         editId={editId}
         handleSubmit={handleSubmit}

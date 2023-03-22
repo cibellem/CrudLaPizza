@@ -47,12 +47,21 @@ function Pizzas() {
     }
   };
 
-  const handlePizzaUpdate = () => {
+  const handlePizzaUpdate = (id: string) => {
+    setPizzas(
+      pizzas.map((t) => {
+        if (t._id === id) {
+          t.toppings = checkedCheckboxesEdit;
+        }
+        return t;
+      })
+    );
+
     PizzaAPI.updatePizza(
       { name: pizza?.name, toppings: checkedCheckboxesEdit },
       pizza?._id as string
     );
-    window.location.reload();
+    // window.location.reload();
     setOpen(false);
   };
 
@@ -149,7 +158,10 @@ function Pizzas() {
           <Button negative onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button positive onClick={handlePizzaUpdate}>
+          <Button
+            positive
+            onClick={() => handlePizzaUpdate(pizza?._id as string)}
+          >
             Update
           </Button>
         </Modal.Actions>
