@@ -16,9 +16,9 @@ CrudLaPizza is a CRUD application built with React, TypeScript , Node.js and Mon
 ## Demo/Live application:
 
 https://crudlapizzafe.onrender.com/ <br/>
-![Desktop](../CrudLaPizza/frontend/src/topDesktop.png) <br>
-![Mobile](../CrudLaPizza/frontend/src/pizzaMobile.png) <br>
-![GithubProject](../CrudLaPizza/frontend/src/githubproject.png) <br>
+![Desktop](./topDesktop.png) <br>
+![Mobile](./pizzaMobile.png) <br>
+![GithubProject](./githubproject.png) <br>
 
 ## Future Improvements/Ideas:
 
