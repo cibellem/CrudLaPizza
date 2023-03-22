@@ -7,6 +7,7 @@ import { Pizza, Topping } from "./Utils";
 
 function Pizzas() {
   const [checkedCheckboxes, setCheckedCheckboxes] = useState([]);
+  const [checkedCheckboxesEdit, setCheckedCheckboxesEdit] = useState([]);
   const [pizzaName, setPizzaName] = useState<string>("");
   const [pizzas, setPizzas] = useState<Pizza[]>([]);
   const [toppings, setToppings] = useState<Topping[]>([]);
@@ -29,7 +30,9 @@ function Pizzas() {
   //Pizza logic
   const handlePizzaSubmit = (e: any) => {
     e.preventDefault();
-    //TODO - Check if it's duplicated
+    if (pizzas.filter((e) => e.name === pizzaName).length <= 0) {
+      console.log();
+    }
     PizzaAPI.createPizza({ name: pizzaName, toppings: checkedCheckboxes }).then(
       (res) => {
         setPizzas([
@@ -44,7 +47,7 @@ function Pizzas() {
   const handlePizzaUpdate = () => {
     setCheckedCheckboxes([]);
     PizzaAPI.updatePizza(
-      { name: pizza?.name, toppings: checkedCheckboxes },
+      { name: pizza?.name, toppings: checkedCheckboxesEdit },
       pizza?._id as string
     );
     PizzaAPI.getPizzas().then((res) => {
@@ -60,6 +63,7 @@ function Pizzas() {
     PizzaAPI.deletePizza(id);
   };
 
+  //TODO refactor this
   const handleCheckboxChange = (data: any) => {
     const isChecked = checkedCheckboxes.some(
       //@ts-ignore
@@ -74,6 +78,24 @@ function Pizzas() {
       );
     } else {
       setCheckedCheckboxes(checkedCheckboxes.concat(data));
+    }
+  };
+
+  //TODO refactor this
+  const handleCheckboxChangeEdit = (data: any) => {
+    const isChecked = checkedCheckboxesEdit.some(
+      //@ts-ignore
+      (checkedCheckbox) => checkedCheckbox.value === data.value
+    );
+    if (isChecked) {
+      setCheckedCheckboxesEdit(
+        checkedCheckboxesEdit.filter(
+          //@ts-ignore
+          (checkedCheckbox) => checkedCheckbox.value !== data.value
+        )
+      );
+    } else {
+      setCheckedCheckboxesEdit(checkedCheckboxesEdit.concat(data));
     }
   };
 
@@ -97,7 +119,7 @@ function Pizzas() {
 
       <Modal open={open}>
         <Modal.Header>Edit Your Pizza</Modal.Header>
-        <p>Pizza Name: {pizza ? pizza.name : ""}</p>
+        <p>Pizza Name: {pizza ? pizza.name : "Loca"}</p>
         <Modal.Content>
           <div className="formWrapper">
             <form>
@@ -110,10 +132,10 @@ function Pizzas() {
                         type="checkbox"
                         value={top.value}
                         name="toppings"
-                        checked={checkedCheckboxes.some(
+                        checked={checkedCheckboxesEdit.some(
                           (checkedBox: any) => checkedBox.value === top.value
                         )}
-                        onChange={() => handleCheckboxChange(top)}
+                        onChange={() => handleCheckboxChangeEdit(top)}
                       />
                       {top.value}
                     </label>
