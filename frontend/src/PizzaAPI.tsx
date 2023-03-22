@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const PIZZA_API_BASE_URL = "api/pizzas/";
+const PIZZA_API_BASE_URL = `${process.env.REACT_BE_URL}/api/pizzas/`;
 
 class PizzaAPI {
   getPizzas() {

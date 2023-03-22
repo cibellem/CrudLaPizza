@@ -12,8 +12,6 @@ body {
   justify-content: center;
   max-width: 90%;
   margin: auto;
-  font-family: "Poppins", sans-serif;
-  /* background-color: #f7efd9; */
 }
 
 .toppingsInventory {
@@ -41,10 +39,6 @@ body {
   justify-content: space-between;
   margin: 5px;
 }
-
-/* .toppingsListActionBtns {
-  margin: 0 15px 0 15px;
-} */
 
 .pizzaMain {
   min-height: 100vh;

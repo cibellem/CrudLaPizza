@@ -13,7 +13,6 @@ function Pizzas() {
   const [pizza, setPizza] = useState<Pizza>();
   const [open, setOpen] = useState(false);
 
-  //TODO - Excessive calls
   useEffect(() => {
     //Call API to get all toppings and set to local state
     PizzaAPI.getPizzas().then((res) => {
@@ -24,6 +23,8 @@ function Pizzas() {
       setToppings(res.data);
     });
   }, []);
+
+  useEffect(() => {}, [pizza]);
 
   //Pizza logic
   const handlePizzaSubmit = (e: any) => {
@@ -41,14 +42,15 @@ function Pizzas() {
   };
 
   const handlePizzaUpdate = () => {
+    setCheckedCheckboxes([]);
     PizzaAPI.updatePizza(
       { name: pizza?.name, toppings: checkedCheckboxes },
       pizza?._id as string
     );
-    setOpen(false);
     PizzaAPI.getPizzas().then((res) => {
       setPizzas(res.data);
     });
+    setOpen(false);
   };
 
   const deletePizza = (id: string) => {
@@ -76,6 +78,7 @@ function Pizzas() {
   };
 
   const editToppingFlow = (data: any) => {
+    setCheckedCheckboxes([]);
     setPizza(data);
     setOpen(true);
   };
@@ -133,12 +136,12 @@ function Pizzas() {
         pizzas.map((pizza: Pizza) => (
           <div className="pizzaCard">
             <Item.Group>
-              <Item>
+              <Item key={pizza._id}>
                 <Item.Content>
                   <Item.Header as="a">Name: {pizza.name}</Item.Header>
                   <Item.Meta>Toppings Added:</Item.Meta>
                   {pizza.toppings.map((topping: any) => (
-                    <List>
+                    <List key={topping._id}>
                       <List.Item>{topping.value}</List.Item>
                     </List>
                   ))}

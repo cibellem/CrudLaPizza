@@ -9,6 +9,7 @@ function Toppings() {
   const [topping, setTopping] = useState<string>("");
   const [editId, setEditId] = useState<string>("");
   const [toppings, setToppings] = useState<Topping[]>([]);
+  const [error, setError] = useState<string>();
 
   useEffect(() => {
     //Call API to get all toppings and set to local state
@@ -47,6 +48,8 @@ function Toppings() {
         ]);
       });
       setTopping("");
+    } else {
+      setError("Topping already in the list");
     }
   };
 
@@ -72,6 +75,7 @@ function Toppings() {
         setTopping={setTopping}
         topping={topping}
       />
+      <span>{error ? error : null}</span>
 
       <ToppingList
         editTopping={editTopping}

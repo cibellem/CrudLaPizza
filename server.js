@@ -22,26 +22,23 @@ if (process.env.NODE_ENV === "production") {
 
 //Api routes will go here
 app.use(routes);
-//Api routes needs to be defined before this runs
-mongoose.connect(
-  process.env.MONGODB_URI ||
-    "mongodb+srv://cibellem:root@cluster0.bnk4x.mongodb.net/pizzaCrud?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  },
-  () => console.log("Connected to the the DB!")
-);
 
 //Send every other request to the React app
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-//Starts the server and syncing models
+const { MONGO_DB_URL } = process.env;
+//Api routes needs to be defined before this runs
+mongoose
+  .connect(MONGO_DB_URL)
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Mongodb connected and Server is running at ${PORT}.`);
+    });
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error.");
+  });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port http://localhost:${PORT}`);
-});
+//Starts the server and syncing models

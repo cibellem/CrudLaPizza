@@ -4,7 +4,6 @@ import { Topping } from "../../Utils";
 
 type Props = {
   pizzaName: string;
-
   handleCheckboxChange: (e: React.SyntheticEvent) => void;
   handlePizzaSubmit: (e: React.SyntheticEvent) => void;
   setPizzaName: (pizzaname: string) => void;
@@ -65,7 +64,7 @@ const PizzaForm = ({
                   </label>
                 ))}
             </>
-            <button type="submit">Create</button>
+            <Button type="submit">Create</Button>
           </form>
         </div>
       </Transition>
