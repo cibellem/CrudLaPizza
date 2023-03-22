@@ -1,7 +1,6 @@
 # CrudLaPizza :pizza:
 
-CrudLaPizza is a CRUD application built with React, TypeScript , Node.js and MongoDB <br/>
-It's responsive and it renders well on a variety of devices and windows. <br/>
+CrudLaPizza is a CRUD application built with React, TypeScript , Node.js and MongoDB. <br/>
 
 ## How to run it locally:
 
@@ -16,9 +15,9 @@ It's responsive and it renders well on a variety of devices and windows. <br/>
 
 ## Demo/Live application:
 
-Github Pages : https://crudlapizzafe.onrender.com// <br/>
-![Desktop](/src/topDesktop.png) <br>
-![Mobile](/src/pizzaMobile.png) <br>
+https://crudlapizzafe.onrender.com/ <br/>
+![Desktop](../CrudLaPizza/frontend/src/topDesktop.png) <br>
+![Mobile](./CrudLaPizza/frontend/src/pizzaMobile.png) <br>
 
 ## Future Improvements/Ideas:
 
