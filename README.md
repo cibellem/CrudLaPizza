@@ -13,12 +13,13 @@ CrudLaPizza is a CRUD application built with React, TypeScript , Node.js and Mon
 :small_orange_diamond: Run the development server: <br/>
 `npm run start`
 
-## Demo/Live application:
+## ScreenShort/Live application:
 
-https://crudlapizzafe.onrender.com/ <br/>
-![Desktop](./topDesktop.png) <br>
-![Mobile](./pizzaMobile.png) <br>
-![GithubProject](./githubproject.png) <br>
+Live Application : https://crudlapizzafe.onrender.com/ <br/>
+
+[Desktop](./topDesktop.png) <br>
+[Mobile](./pizzaMobile.png) <br>
+[GithubProject](./githubproject.png) <br>
 
 ## Future Improvements/Ideas:
 
@@ -29,7 +30,6 @@ Better error handling <br/>
 
 ## Developer Notes:
 
-I deployed this application on Render which is a good replacement for Heroku, since the last one it's not longer free. It was very seamless and straighforward. <br/>
-I learned a little bit more about Github projects and how to leverage it to keep track of your work when other tools are not available. <br/>
-
-For simplicity I used React Semantic UI to . <br/>
+I deployed this application on [Render](https://render.com/) which is a good replacement for Heroku, since the last one it's not longer free. It was very seamless and straighforward. <br/>
+I learned a little bit more about Github projects and how to leverage it to keep track of your work. <br/>
+For styling I used [Semantic UI React](https://react.semantic-ui.com/) . <br/>
